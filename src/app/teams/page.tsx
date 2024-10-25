@@ -45,6 +45,9 @@ export default function Teams(){
     }
 
     const onAddGuest = () => {
+        if(guestName === ''){
+            return;
+        }
         let tps = teamPlayers.map(tp => tp);
         tps.push({
             id: Math.max(...tps.map(tp => tp.id), 0) + 1,
@@ -58,8 +61,8 @@ export default function Teams(){
     };
 
     return(
-        <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-            <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
+        <div className="grid items-center justify-items-center min-h-screen p-0 pb-5 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+            <main className="flex flex-col gap-8 row-start-1 items-center sm:items-center">
                 <div>
                     Make teams
                 </div>
@@ -82,7 +85,7 @@ export default function Teams(){
                     ))}
                 </ul>               
             </main>
-            <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
+            <footer className="row-start-5 flex gap-2 flex-wrap items-center justify-center">
                 <div>
                     <input className="bg-gray-100 appearance-none border-2 border-gray-100 rounded w-full focus:outline-none focus:bg-white focus:border-black py-1 px-3" name="guestName" placeholder="Enter guest name"
                         value={guestName}
