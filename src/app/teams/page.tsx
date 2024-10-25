@@ -34,22 +34,8 @@ export default function Teams(){
       }, []);
       
     const onTeamClick = (team: GameTeams, id:number) => {
-        console.log(team);
-        console.log(id);
-        if(team === GameTeams.Team1){
-            let teamPlayer = teamPlayers.find((p:People) => p.id == id);
-            if(teamPlayer){
-                teamPlayer.team = GameTeams.Team1;
-            }
-        }
-        else{
-            let teamPlayer = teamPlayers.find((p:People) => p.id == id);
-            if(teamPlayer){
-                teamPlayer.team = GameTeams.Team2;
-            }
-        }
-        //TODO below
-        setTeamPlayers(teamPlayers);
+        let tps = teamPlayers.map(tp => (tp.id === id ? {...tp, team:team} : tp));
+        setTeamPlayers(tps);
     }
 
     return(
@@ -60,16 +46,15 @@ export default function Teams(){
                     <li key={tp.id}>
                         <div className="grid grid-cols-3 gap-3 items-center py-1">
                             <div>{tp.name}</div>
-                            <div className={`rounded-full border border-solid ${ tp.team === GameTeams.Team1? 'border-transparent' : 'border-black'} transition-colors flex items-center justify-center ${ tp.team === GameTeams.Team1 ? 'bg-foreground text-background': '' } gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-8 sm:h-8 px-4 sm:px-5`}
+                            <div className={`rounded-full border border-solid ${ tp.team === GameTeams.Team1? 'border-transparent' : 'border-black'} transition-colors flex items-center justify-center ${ tp.team === GameTeams.Team1 ? 'bg-foreground text-background': '' } gap-2 text-sm sm:text-base h-8 sm:h-8 px-4 sm:px-5`}
                                 onClick={() => onTeamClick(GameTeams.Team1, tp.id)}>
                                 Team 1
                             </div>
-                            <div className={`rounded-full border border-solid ${ tp.team === GameTeams.Team2? 'border-transparent' : 'border-black'} transition-colors flex items-center justify-center ${ tp.team === GameTeams.Team2 ? 'bg-foreground text-background': '' } gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-8 sm:h-8 px-4 sm:px-5`}
+                            <div className={`rounded-full border border-solid ${ tp.team === GameTeams.Team2? 'border-transparent' : 'border-black'} transition-colors flex items-center justify-center ${ tp.team === GameTeams.Team2 ? 'bg-foreground text-background': '' } gap-2 text-sm sm:text-base h-8 sm:h-8 px-4 sm:px-5`}
                                 onClick={() => onTeamClick(GameTeams.Team2, tp.id)}>
                                 Team 2
                             </div>
-                        </div>
-                        
+                        </div>                        
                     </li>
                     ))}
                 </ul>
