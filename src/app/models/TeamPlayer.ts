@@ -4,4 +4,5 @@ export interface TeamPlayer{
     id: number;
     name: string;
     team: GameTeams;
+    isGuest?: boolean;
 }

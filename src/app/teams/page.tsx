@@ -52,7 +52,8 @@ export default function Teams(){
         tps.push({
             id: Math.max(...tps.map(tp => tp.id), 0) + 1,
             name: guestName,
-            team: guestTeam
+            team: guestTeam,
+            isGuest: true
         })
 
         setTeamPlayers(tps);
@@ -63,7 +64,7 @@ export default function Teams(){
     return(
         <div className="grid items-center justify-items-center min-h-screen p-0 pb-5 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
             <main className="flex flex-col gap-8 row-start-1 items-center sm:items-center">
-                <div>
+                <div className="text-lg font-medium">
                     Make teams
                 </div>
                 
@@ -71,7 +72,7 @@ export default function Teams(){
                     {teamPlayers.map((tp:TeamPlayer) => (
                     <li key={tp.id}>
                         <div className="grid grid-cols-3 gap-3 items-center py-1">
-                            <div>{tp.name}</div>
+                            <div>{tp.name} {tp.isGuest && <span>(G)</span>}</div>
                             <div className={`rounded-full border border-solid ${ tp.team === GameTeams.Team1? 'border-transparent' : 'border-black'} transition-colors flex items-center justify-center ${ tp.team === GameTeams.Team1 ? 'bg-foreground text-background': '' } gap-2 text-sm sm:text-base h-8 sm:h-8 px-4 sm:px-5`}
                                 onClick={() => onTeamClick(GameTeams.Team1, tp.id)}>
                                 Team 1
