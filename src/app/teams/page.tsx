@@ -5,11 +5,16 @@ import { TeamPlayer } from "../models/TeamPlayer";
 import ModalContent from "../modals/page";
 import { createPortal } from "react-dom";
 import AddGuest from "../addGuest/page";
+import { useRouter } from "next/navigation";
+import PlayerTeamAssignmentRow from "./playerTeamAssignmentRow";
+import TeamsConfirmation from "./teamsConfirmation";
 
 export default function Teams(){
+    const router = useRouter();
     const [teamPlayers, setTeamPlayers] = useState<TeamPlayer[]>([]);
     const [showModal, setShowModal] = useState(false);
-    
+    const [showTeamsConfirmation, setShowTeamsConfirmation] = useState(false);
+
     useEffect(() => {
         fetch('/people.json')
           .then(response => response.json())
@@ -63,30 +68,26 @@ export default function Teams(){
             <main className="flex flex-col gap-8 row-start-2 items-center sm:items-center">
                 <div className="text-lg font-medium">
                     Make teams
-                </div>
-                
-                <ul>
-                    {teamPlayers.map((tp:TeamPlayer) => (
-                    <li key={tp.id}>
-                        <div className="grid grid-cols-3 gap-3 items-center py-1">
-                            <div>{tp.name} {tp.isGuest && <span>(G)</span>}</div>
-                            <div className={`rounded-full border border-solid ${ tp.team === GameTeams.Team1? 'border-transparent' : 'border-black'} transition-colors flex items-center justify-center ${ tp.team === GameTeams.Team1 ? 'bg-foreground text-background': '' } gap-2 text-sm sm:text-base h-8 sm:h-8 px-4 sm:px-5`}
-                                onClick={() => onTeamClick(GameTeams.Team1, tp.id)}>
-                                Team 1
-                            </div>
-                            <div className={`rounded-full border border-solid ${ tp.team === GameTeams.Team2? 'border-transparent' : 'border-black'} transition-colors flex items-center justify-center ${ tp.team === GameTeams.Team2 ? 'bg-foreground text-background': '' } gap-2 text-sm sm:text-base h-8 sm:h-8 px-4 sm:px-5`}
-                                onClick={() => onTeamClick(GameTeams.Team2, tp.id)}>
-                                Team 2
-                            </div>
-                        </div>                        
-                    </li>
-                    ))}
-                </ul>               
+                </div>                
+                { !showTeamsConfirmation && 
+                    <ul>
+                        {teamPlayers.map((tp:TeamPlayer) => (
+                        <li key={tp.id}>
+                            <PlayerTeamAssignmentRow tp={tp} onTeamClick={onTeamClick}></PlayerTeamAssignmentRow>
+                        </li>
+                        ))}
+                    </ul>}
+                { showTeamsConfirmation && <TeamsConfirmation teamPlayers={teamPlayers}></TeamsConfirmation>}
             </main>
             <div className="row-start-6 flex flex-col  space-y-3">
-                <button className="rounded-full bg-gray-200 border-solid border-2 p-2 w-32">Continue</button>
-                <button className="rounded-full bg-gray-50 border-solid border-black border p-2 w-32"
-                    onClick={() => setShowModal(true)}>Add Guest</button>
+                { !showTeamsConfirmation && <button className="rounded-full bg-gray-200 border-solid border-2 p-2 w-32"
+                    onClick={() => setShowTeamsConfirmation(true)}>Continue</button>}
+                {!showTeamsConfirmation && <button className="rounded-full bg-gray-50 border-solid border-black border p-2 w-32"
+                    onClick={() => setShowModal(true)}>Add Guest</button>}
+                { showTeamsConfirmation && <button className="rounded-full bg-gray-200 border-solid border-2 p-2 w-32"
+                    onClick={() => setShowTeamsConfirmation(false)}>Confirm</button>}
+                { showTeamsConfirmation && <button className="rounded-full bg-gray-50 border-solid border-black border p-2 w-32"
+                    onClick={() => setShowTeamsConfirmation(false)}>Go Back</button>}
             </div>
             {showModal && createPortal(
                 <ModalContent onClose={() => setShowModal(false)}>
