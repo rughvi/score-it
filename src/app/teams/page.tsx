@@ -92,7 +92,7 @@ export default function Teams(){
             </main>
             <div className="row-start-6 flex flex-col  space-y-2">
                 <button className="rounded-full bg-gray-200 border-solid border-2 p-2 w-32">Continue</button>
-                <button className="rounded-full bg-gray-200 border-solid border-2 p-2 w-32"
+                <button className="rounded-full bg-gray-50 border-solid border-black border p-2 w-32"
                     onClick={() => setShowModal(true)}>Add Guest</button>
             </div>
             {/* <button className="row-start-5 rounded-full bg-gray-200 border-solid border-2 p-2 w-32">Continue</button>
