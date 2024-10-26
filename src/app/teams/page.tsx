@@ -2,11 +2,15 @@
 import { useEffect, useState } from "react";
 import { GameTeams } from "../enums/GameTeams";
 import { TeamPlayer } from "../models/TeamPlayer";
+import ModalContent from "../modals/page";
+import { createPortal } from "react-dom";
 
 export default function Teams(){
     const [teamPlayers, setTeamPlayers] = useState<TeamPlayer[]>([]);
     const [guestTeam, setGuestTeam] = useState<GameTeams>(GameTeams.Team1);
     const [guestName, setGuestName] = useState('');
+    const [showModal, setShowModal] = useState(false);
+    
     useEffect(() => {
         fetch('/people.json')
           .then(response => response.json())
@@ -87,7 +91,13 @@ export default function Teams(){
                 </ul>               
             </main>
             <button className="row-start-5 rounded-full bg-gray-200 border-solid border-2 p-2 w-32">Continue</button>
-            <footer className="row-start-6 flex gap-2 flex-wrap items-center justify-center">
+            <button className="row-start-6 rounded-full bg-gray-200 border-solid border-2 p-2 w-32"
+                onClick={() => setShowModal(true)}>Add Guest</button>
+            {showModal && createPortal(
+                <ModalContent onClose={() => setShowModal(false)}></ModalContent>,
+                document.body
+            )}
+            <footer className="row-start-7 flex gap-2 flex-wrap items-center justify-center">
                 <div>
                     <input className="bg-gray-100 appearance-none border-2 border-gray-100 rounded w-full focus:outline-none focus:bg-white focus:border-black py-1 px-3" name="guestName" placeholder="Enter guest name"
                         value={guestName}
