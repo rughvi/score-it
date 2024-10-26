@@ -86,7 +86,8 @@ export default function Teams(){
                     ))}
                 </ul>               
             </main>
-            <footer className="row-start-5 flex gap-2 flex-wrap items-center justify-center">
+            <button className="row-start-5 rounded-full bg-gray-200 border-solid border-2 p-2 w-32">Continue</button>
+            <footer className="row-start-6 flex gap-2 flex-wrap items-center justify-center">
                 <div>
                     <input className="bg-gray-100 appearance-none border-2 border-gray-100 rounded w-full focus:outline-none focus:bg-white focus:border-black py-1 px-3" name="guestName" placeholder="Enter guest name"
                         value={guestName}
