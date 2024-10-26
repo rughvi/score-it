@@ -25,30 +25,34 @@ export default function Teams(){
         fetch('/people.json')
           .then(response => response.json())
           .then((d:{"people":People[]}) => {
-            let tps: TeamPlayer[] = [];
-            for(const p of d.people){
-                const r = Math.floor(Math.random() * d.people.length);
-                if(r % 2 === 0){
-                    let teamPlayer:TeamPlayer = {
-                        id: p.id,
-                        name: p.name,
-                        team: GameTeams.Team1
-                    }
-                    tps.push(teamPlayer);
-                }else{
-                    let teamPlayer:TeamPlayer = {
-                        id: p.id,
-                        name: p.name,
-                        team: GameTeams.Team2
-                    }
-                    tps.push(teamPlayer);
-                }
-            }
-            setTeamPlayers(tps);
+            distributePlayersToTeams(d);
           })
           .catch(error => console.error('Error fetching data:', error));
       }, [user]);
-      
+    
+    const distributePlayersToTeams = (data: {"people":People[]}) => {
+        let tps: TeamPlayer[] = [];
+        for(const p of data.people){
+            const r = Math.floor(Math.random() * data.people.length);
+            if(r % 2 === 0){
+                let teamPlayer:TeamPlayer = {
+                    id: p.id,
+                    name: p.name,
+                    team: GameTeams.Team1
+                }
+                tps.push(teamPlayer);
+            }else{
+                let teamPlayer:TeamPlayer = {
+                    id: p.id,
+                    name: p.name,
+                    team: GameTeams.Team2
+                }
+                tps.push(teamPlayer);
+            }
+        }
+        setTeamPlayers(tps);
+    }
+
     const onTeamClick = (team: GameTeams, id:number) => {
         let tps = teamPlayers.map(tp => (tp.id === id ? {...tp, team:team} : tp));
         setTeamPlayers(tps);
