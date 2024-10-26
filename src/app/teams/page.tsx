@@ -8,14 +8,20 @@ import AddGuest from "../addGuest/page";
 import { useRouter } from "next/navigation";
 import PlayerTeamAssignmentRow from "./playerTeamAssignmentRow";
 import TeamsConfirmation from "./teamsConfirmation";
+import { useAuthContext } from "@/context/AuthContext";
 
 export default function Teams(){
+    const { user } = useAuthContext();
     const router = useRouter();
     const [teamPlayers, setTeamPlayers] = useState<TeamPlayer[]>([]);
     const [showModal, setShowModal] = useState(false);
     const [showTeamsConfirmation, setShowTeamsConfirmation] = useState(false);
 
     useEffect(() => {
+        if(user === undefined || user === null){
+            router.push("/signin");
+            return;
+        }
         fetch('/people.json')
           .then(response => response.json())
           .then((d:{"people":People[]}) => {
@@ -41,7 +47,7 @@ export default function Teams(){
             setTeamPlayers(tps);
           })
           .catch(error => console.error('Error fetching data:', error));
-      }, []);
+      }, [user]);
       
     const onTeamClick = (team: GameTeams, id:number) => {
         let tps = teamPlayers.map(tp => (tp.id === id ? {...tp, team:team} : tp));
