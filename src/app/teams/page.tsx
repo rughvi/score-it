@@ -67,7 +67,7 @@ export default function Teams(){
 
     return(
         <div className="grid items-center justify-items-center min-h-screen p-0 pb-5 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-            <main className="flex flex-col gap-8 row-start-1 items-center sm:items-center">
+            <main className="flex flex-col gap-8 row-start-2 items-center sm:items-center">
                 <div className="text-lg font-medium">
                     Make teams
                 </div>
@@ -90,9 +90,14 @@ export default function Teams(){
                     ))}
                 </ul>               
             </main>
-            <button className="row-start-5 rounded-full bg-gray-200 border-solid border-2 p-2 w-32">Continue</button>
+            <div className="row-start-6 flex flex-col  space-y-2">
+                <button className="rounded-full bg-gray-200 border-solid border-2 p-2 w-32">Continue</button>
+                <button className="rounded-full bg-gray-200 border-solid border-2 p-2 w-32"
+                    onClick={() => setShowModal(true)}>Add Guest</button>
+            </div>
+            {/* <button className="row-start-5 rounded-full bg-gray-200 border-solid border-2 p-2 w-32">Continue</button>
             <button className="row-start-6 rounded-full bg-gray-200 border-solid border-2 p-2 w-32"
-                onClick={() => setShowModal(true)}>Add Guest</button>
+                onClick={() => setShowModal(true)}>Add Guest</button> */}
             {showModal && createPortal(
                 <ModalContent onClose={() => setShowModal(false)}>
                     <div>
