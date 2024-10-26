@@ -3,6 +3,6 @@ import { getFirestore, doc, getDoc, getDocs, collection } from "firebase/firesto
 
 const db = getFirestore(firebase_app)
 
-export async function getDocuments(collectionName:string) {
+export function getDocuments(collectionName:string) {
     return getDocs(collection(db, collectionName));
 }
