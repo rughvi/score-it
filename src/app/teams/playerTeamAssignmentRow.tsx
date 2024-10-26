@@ -1,7 +1,8 @@
+import { UUID } from "crypto";
 import { GameTeams } from "../enums/GameTeams";
 import { TeamPlayer } from "../models/teamPlayer";
 
-export default function PlayerTeamAssignmentRow({tp, onTeamClick}: {tp: TeamPlayer, onTeamClick: (team: GameTeams, id:number) => void}){
+export default function PlayerTeamAssignmentRow({tp, onTeamClick}: {tp: TeamPlayer, onTeamClick: (team: GameTeams, id:UUID) => void}){
     return (
         <div className="grid grid-cols-3 gap-3 items-center py-1">
             <div>{tp.name} {tp.isGuest && <span>(G)</span>}</div>

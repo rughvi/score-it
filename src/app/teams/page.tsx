@@ -9,6 +9,8 @@ import { useRouter } from "next/navigation";
 import PlayerTeamAssignmentRow from "./playerTeamAssignmentRow";
 import TeamsConfirmation from "./teamsConfirmation";
 import { useAuthContext } from "@/context/AuthContext";
+import { People } from "../models/people";
+import { randomUUID, UUID } from "crypto";
 
 export default function Teams(){
     const { user } = useAuthContext();
@@ -53,7 +55,7 @@ export default function Teams(){
         setTeamPlayers(tps);
     }
 
-    const onTeamClick = (team: GameTeams, id:number) => {
+    const onTeamClick = (team: GameTeams, id:UUID) => {
         let tps = teamPlayers.map(tp => (tp.id === id ? {...tp, team:team} : tp));
         setTeamPlayers(tps);
     }
@@ -64,7 +66,7 @@ export default function Teams(){
         }
         let tps = teamPlayers.map(tp => tp);
         tps.push({
-            id: Math.max(...tps.map(tp => tp.id), 0) + 1,
+            id: randomUUID(),
             name: guestName,
             team: guestTeam,
             isGuest: true
