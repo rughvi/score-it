@@ -63,6 +63,16 @@ export default function Teams(){
         setTeamPlayers(tps);
     };
 
+    const onConfirmTeamsClick = () => {
+        const teams1 = teamPlayers.filter(tp => tp.team === GameTeams.Team1);
+        const teams2 = teamPlayers.filter(tp => tp.team === GameTeams.Team2);
+        if(teams1.length !== teams2.length){
+            alert('Are you sure?');
+            return;
+        }
+        router.push('/toss');
+    }
+
     return(
         <div className="grid items-center justify-items-center min-h-screen p-0 pb-5 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
             <main className="flex flex-col gap-8 row-start-2 items-center sm:items-center">
@@ -85,7 +95,7 @@ export default function Teams(){
                 {!showTeamsConfirmation && <button className="rounded-full bg-gray-50 border-solid border-black border p-2 w-32"
                     onClick={() => setShowModal(true)}>Add Guest</button>}
                 { showTeamsConfirmation && <button className="rounded-full bg-gray-200 border-solid border-2 p-2 w-32"
-                    onClick={() => setShowTeamsConfirmation(false)}>Confirm</button>}
+                    onClick={() => onConfirmTeamsClick()}>Confirm</button>}
                 { showTeamsConfirmation && <button className="rounded-full bg-gray-50 border-solid border-black border p-2 w-32"
                     onClick={() => setShowTeamsConfirmation(false)}>Go Back</button>}
             </div>
