@@ -2,13 +2,21 @@
 import Image from "next/image";
 import { addGame } from "@/firebase/firestore/addData";
 import {v4 as uuidv4} from 'uuid';
+import { useRouter } from 'next/navigation'
 
 export default function Home() {
 
-  const onStartAGameClick = () => {
+  const router = useRouter();
+
+  const onStartAGameClick = async () => {
     let id = uuidv4();
-    addGame("games", {id: id, createdAt: Date.now()})
-    .then(result => console.log(result));
+    let {result, error} = await addGame("games", {id: id, createdAt: Date.now()});
+    if(error === undefined || error === null){
+      router.push('/teams?gameId='+id);
+    }
+    else{
+      console.log(error)
+    }    
   }
 
   return (

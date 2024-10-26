@@ -12,23 +12,26 @@ import { useAuthContext } from "@/context/AuthContext";
 import { People } from "../models/people";
 import {v4 as uuidv4} from 'uuid';
 import { getDocuments } from "@/firebase/firestore/getData";
+import { useSearchParams } from 'next/navigation'
 
 export default function Teams(){
+    const searchParams = useSearchParams();
     const { user } = useAuthContext();
     const router = useRouter();
     const [teamPlayers, setTeamPlayers] = useState<TeamPlayer[]>([]);
     const [showModal, setShowModal] = useState(false);
     const [showTeamsConfirmation, setShowTeamsConfirmation] = useState(false);
-    
+    const gameId = searchParams.get('gameId');
+
     useEffect(() => {
         if(user === undefined || user === null){
             router.push("/signin");
             return;
         }
+
         getDocuments('players')
             .then(result => result.docs)            
             .then(docs => {
-                console.log(docs);
                 let people:People[] = [];
                 docs.forEach(doc => {
                     people.push({id: doc.id, name: doc.data().name});
@@ -36,7 +39,7 @@ export default function Teams(){
 
                 distributePlayersToTeams(people);
             });
-      }, [user]);
+      }, [user, gameId]);
     
     const distributePlayersToTeams = (people: People[]) => {
         let tps: TeamPlayer[] = [];
