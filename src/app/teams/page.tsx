@@ -10,7 +10,8 @@ import PlayerTeamAssignmentRow from "./playerTeamAssignmentRow";
 import TeamsConfirmation from "./teamsConfirmation";
 import { useAuthContext } from "@/context/AuthContext";
 import { People } from "../models/people";
-import { randomUUID, UUID } from "crypto";
+import {v4 as uuidv4} from 'uuid';
+import { getDocuments } from "@/firebase/firestore/getData";
 
 export default function Teams(){
     const { user } = useAuthContext();
@@ -18,24 +19,29 @@ export default function Teams(){
     const [teamPlayers, setTeamPlayers] = useState<TeamPlayer[]>([]);
     const [showModal, setShowModal] = useState(false);
     const [showTeamsConfirmation, setShowTeamsConfirmation] = useState(false);
-
+    
     useEffect(() => {
         if(user === undefined || user === null){
             router.push("/signin");
             return;
         }
-        fetch('/people.json')
-          .then(response => response.json())
-          .then((d:{"people":People[]}) => {
-            distributePlayersToTeams(d);
-          })
-          .catch(error => console.error('Error fetching data:', error));
+        getDocuments('players')
+            .then(result => result.docs)            
+            .then(docs => {
+                console.log(docs);
+                let people:People[] = [];
+                docs.forEach(doc => {
+                    people.push({id: doc.id, name: doc.data().name});
+                });
+
+                distributePlayersToTeams(people);
+            });
       }, [user]);
     
-    const distributePlayersToTeams = (data: {"people":People[]}) => {
+    const distributePlayersToTeams = (people: People[]) => {
         let tps: TeamPlayer[] = [];
-        for(const p of data.people){
-            const r = Math.floor(Math.random() * data.people.length);
+        for(const p of people){
+            const r = Math.floor(Math.random() * people.length);
             if(r % 2 === 0){
                 let teamPlayer:TeamPlayer = {
                     id: p.id,
@@ -55,7 +61,7 @@ export default function Teams(){
         setTeamPlayers(tps);
     }
 
-    const onTeamClick = (team: GameTeams, id:UUID) => {
+    const onTeamClick = (team: GameTeams, id:string) => {
         let tps = teamPlayers.map(tp => (tp.id === id ? {...tp, team:team} : tp));
         setTeamPlayers(tps);
     }
@@ -66,7 +72,7 @@ export default function Teams(){
         }
         let tps = teamPlayers.map(tp => tp);
         tps.push({
-            id: randomUUID(),
+            id: uuidv4(),
             name: guestName,
             team: guestTeam,
             isGuest: true
