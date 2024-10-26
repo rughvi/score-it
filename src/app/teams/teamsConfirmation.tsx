@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { TeamPlayer } from "../models/TeamPlayer";
+import { TeamPlayer } from "../models/teamPlayer";
 import { GameTeams } from "../enums/GameTeams";
 
 export default function TeamsConfirmation({teamPlayers}: {teamPlayers: TeamPlayer[]}){

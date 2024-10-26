@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { GameTeams } from "../enums/GameTeams";
-import { TeamPlayer } from "../models/TeamPlayer";
+import { TeamPlayer } from "../models/teamPlayer";
 import ModalContent from "../modals/page";
 import { createPortal } from "react-dom";
 import AddGuest from "../addGuest/page";

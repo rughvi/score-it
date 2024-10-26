@@ -1,5 +1,5 @@
 import { GameTeams } from "../enums/GameTeams";
-import { TeamPlayer } from "../models/TeamPlayer";
+import { TeamPlayer } from "../models/teamPlayer";
 
 export default function PlayerTeamAssignmentRow({tp, onTeamClick}: {tp: TeamPlayer, onTeamClick: (team: GameTeams, id:number) => void}){
     return (
