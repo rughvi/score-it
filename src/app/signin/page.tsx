@@ -20,7 +20,7 @@ export default function SignIn() {
 
         // else successful
         console.log(result)
-        return router.push("/admin")
+        return router.push("/")
     }
     return (
     <div className="grid items-center min-h-screen p-0 pb-5 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
