@@ -1,6 +1,7 @@
 import { Game } from "@/app/models/game";
 import firebase_app from "../config";
 import { getFirestore, doc, setDoc } from "firebase/firestore";
+import { TeamPlayer } from "@/app/models/teamPlayer";
 
 const db = getFirestore(firebase_app)
 
@@ -19,12 +20,12 @@ export async function addGame(colllection: string, game: Game) {
     return { result, error };
 }
 
-export async function addTeamsToGame(gameId: string, game: Game){
+export async function addTeamsToGame(gameId: string, players: TeamPlayer[]){
     let result = null;
     let error = null;
 
     try {
-        result = await setDoc(doc(db, "games", gameId), game, {
+        result = await setDoc(doc(db, "games", gameId), {players}, {
             merge: true,
         });
     } catch (e) {

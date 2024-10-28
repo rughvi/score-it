@@ -92,7 +92,7 @@ export default function Teams(){
             alert('Are you sure?');
             return;
         }
-        await addTeamsToGame(gameId, {id: gameId, players: teamPlayers});
+        await addTeamsToGame(gameId, teamPlayers);
         router.push('/toss');
     }
 
