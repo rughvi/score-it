@@ -13,7 +13,8 @@ import { People } from "../models/people";
 import {v4 as uuidv4} from 'uuid';
 import { getPlayers } from "@/firebase/firestore/getData";
 import { addTeamsToGame } from "@/firebase/firestore/addData";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setTeams } from "@/redux/slices/inningsSlice";
 
 export default function Teams(){
     const { user } = useAuthContext();
@@ -23,6 +24,7 @@ export default function Teams(){
     const [showTeamsConfirmation, setShowTeamsConfirmation] = useState(false);
     
     const gameId = useSelector((state) => state.game.gameId);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         if(user === undefined || user === null){
@@ -93,6 +95,7 @@ export default function Teams(){
             return;
         }
         await addTeamsToGame(gameId, teamPlayers);
+        await dispatch(setTeams(teamPlayers));
         router.push('/toss');
     }
 
