@@ -45,10 +45,10 @@ export default function Toss(){
                     Bowling team is:
                 </div>
                 <div className="flex flex-row justify-around">
-                    { bowlingTeam === GameTeams.Team1 && <div className={`rounded-full border border-solid ${ bowlingTeam === GameTeams.Team1? 'border-transparent' : 'border-gray'} transition-colors flex items-center justify-center ${ bowlingTeam === GameTeams.Team1 ? 'bg-gray-400 text-black': '' } gap-2 text-sm sm:text-base h-8 sm:h-8 px-4 sm:px-5`}>
+                    { bowlingTeam === GameTeams.Team1 && <div className={`rounded-full border border-solid ${ bowlingTeam === GameTeams.Team1? 'border-transparent' : 'border-gray'} transition-colors flex items-center justify-center ${ bowlingTeam === GameTeams.Team1 ? 'bg-gray-200 text-black': '' } gap-2 text-sm sm:text-base h-8 sm:h-8 px-4 sm:px-5`}>
                         Team 1
                     </div>}
-                    { bowlingTeam === GameTeams.Team2 && <div className={`rounded-full border border-solid ${ bowlingTeam === GameTeams.Team2? 'border-transparent' : 'border-gray'} transition-colors flex items-center justify-center ${ bowlingTeam === GameTeams.Team2 ? 'bg-gray-400 text-black': '' } gap-2 text-sm sm:text-base h-8 sm:h-8 px-4 sm:px-5`}>
+                    { bowlingTeam === GameTeams.Team2 && <div className={`rounded-full border border-solid ${ bowlingTeam === GameTeams.Team2? 'border-transparent' : 'border-gray'} transition-colors flex items-center justify-center ${ bowlingTeam === GameTeams.Team2 ? 'bg-gray-200 text-black': '' } gap-2 text-sm sm:text-base h-8 sm:h-8 px-4 sm:px-5`}>
                         Team 2
                     </div>}
                 </div>
