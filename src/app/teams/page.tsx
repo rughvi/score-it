@@ -11,7 +11,7 @@ import TeamsConfirmation from "./teamsConfirmation";
 import { useAuthContext } from "@/context/AuthContext";
 import { People } from "../models/people";
 import {v4 as uuidv4} from 'uuid';
-import { getDocuments } from "@/firebase/firestore/getData";
+import { getPlayers } from "@/firebase/firestore/getData";
 import { useSearchParams } from 'next/navigation'
 import { addTeamsToGame } from "@/firebase/firestore/addData";
 
@@ -30,7 +30,7 @@ export default function Teams(){
             return;
         }
 
-        getDocuments('players')
+        getPlayers()
             .then(result => result.docs)            
             .then(docs => {
                 let people:People[] = [];
