@@ -3,16 +3,19 @@ import Image from "next/image";
 import { addGame } from "@/firebase/firestore/addData";
 import {v4 as uuidv4} from 'uuid';
 import { useRouter } from 'next/navigation'
+import { useDispatch } from "react-redux";
+import { startGame } from "@/redux/slices/gameSlice";
 
 export default function Home() {
-
+  const dispatch = useDispatch();
   const router = useRouter();
 
   const onStartAGameClick = async () => {
     let id = uuidv4();
     let {result, error} = await addGame("games", {id: id, createdAt: Date.now()});
     if(error === undefined || error === null){
-      router.push('/teams?gameId='+id);
+      dispatch(startGame(id));
+      router.push('/teams');
     }
     else{
       console.log(error)

@@ -12,17 +12,17 @@ import { useAuthContext } from "@/context/AuthContext";
 import { People } from "../models/people";
 import {v4 as uuidv4} from 'uuid';
 import { getPlayers } from "@/firebase/firestore/getData";
-import { useSearchParams } from 'next/navigation'
 import { addTeamsToGame } from "@/firebase/firestore/addData";
+import { useSelector } from "react-redux";
 
 export default function Teams(){
-    const searchParams = useSearchParams();
     const { user } = useAuthContext();
     const router = useRouter();
     const [teamPlayers, setTeamPlayers] = useState<TeamPlayer[]>([]);
     const [showModal, setShowModal] = useState(false);
     const [showTeamsConfirmation, setShowTeamsConfirmation] = useState(false);
-    const gameId:string = searchParams.get('gameId')!;
+    
+    const gameId = useSelector((state) => state.game.gameId);
 
     useEffect(() => {
         if(user === undefined || user === null){
