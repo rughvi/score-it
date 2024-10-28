@@ -1,4 +1,4 @@
-import { TeamPlayer } from "./TeamPlayer";
+import { TeamPlayer } from "./teamPlayer";
 
 export interface Team{
     name: string;

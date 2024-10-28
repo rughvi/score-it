@@ -18,3 +18,18 @@ export async function addGame(colllection: string, game: Game) {
     }
     return { result, error };
 }
+
+export async function addTeamsToGame(gameId: string, game: Game){
+    let result = null;
+    let error = null;
+
+    try {
+        result = await setDoc(doc(db, "games", gameId), game, {
+            merge: true,
+        });
+    } catch (e) {
+        error = e;
+    }
+
+    return { result, error };
+}

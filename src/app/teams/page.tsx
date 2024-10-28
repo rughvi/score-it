@@ -13,6 +13,7 @@ import { People } from "../models/people";
 import {v4 as uuidv4} from 'uuid';
 import { getDocuments } from "@/firebase/firestore/getData";
 import { useSearchParams } from 'next/navigation'
+import { addTeamsToGame } from "@/firebase/firestore/addData";
 
 export default function Teams(){
     const searchParams = useSearchParams();
@@ -21,7 +22,7 @@ export default function Teams(){
     const [teamPlayers, setTeamPlayers] = useState<TeamPlayer[]>([]);
     const [showModal, setShowModal] = useState(false);
     const [showTeamsConfirmation, setShowTeamsConfirmation] = useState(false);
-    const gameId = searchParams.get('gameId');
+    const gameId:string = searchParams.get('gameId')!;
 
     useEffect(() => {
         if(user === undefined || user === null){
@@ -41,7 +42,7 @@ export default function Teams(){
             });
       }, [user, gameId]);
     
-    const distributePlayersToTeams = (people: People[]) => {
+    const distributePlayersToTeams = async (people: People[]) => {
         let tps: TeamPlayer[] = [];
         for(const p of people){
             const r = Math.floor(Math.random() * people.length);
@@ -60,7 +61,7 @@ export default function Teams(){
                 }
                 tps.push(teamPlayer);
             }
-        }
+        }        
         setTeamPlayers(tps);
     }
 
@@ -84,13 +85,14 @@ export default function Teams(){
         setTeamPlayers(tps);
     };
 
-    const onConfirmTeamsClick = () => {
+    const onConfirmTeamsClick = async () => {
         const teams1 = teamPlayers.filter(tp => tp.team === GameTeams.Team1);
         const teams2 = teamPlayers.filter(tp => tp.team === GameTeams.Team2);
         if(teams1.length !== teams2.length){
             alert('Are you sure?');
             return;
         }
+        await addTeamsToGame(gameId, {id: gameId, players: teamPlayers});
         router.push('/toss');
     }
 
