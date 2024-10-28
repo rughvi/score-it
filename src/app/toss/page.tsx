@@ -1,16 +1,19 @@
 
 "use client";
-export default function Toss(){
-    
-    const onContinueClick = () => {
+import { useRouter } from "next/navigation";
 
+export default function Toss(){
+    const router = useRouter();
+
+    const onContinueClick = () => {
+        router.push("/innings");
     }
 
     return(
         <div className="grid items-center justify-items-center min-h-screen p-0 pb-5 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
             <main className="flex flex-col gap-8 row-start-2 items-center sm:items-center">
                 <div className="text-lg font-medium">
-                    Toss
+                    Toss - todo
                 </div>
                 
             </main>
