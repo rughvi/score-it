@@ -39,7 +39,8 @@ const inningsSlice = createSlice({
             }
             state.currentOver = state.currentOver + 1;
             let co = state.currentOver;
-            let score = {... state.score, co : []};
+            let score = {... state.score};
+            score[co] = Array(6).fill(0);
             state.score = score;
             state.isOverInProgress = true;
         },
