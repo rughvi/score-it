@@ -47,10 +47,15 @@ const inningsSlice = createSlice({
         finishOver: (state) => {
             state.finishedOvers = state.finishedOvers + 1;
             state.isOverInProgress = false;
+        },
+        setScore: (state, action) => {
+            let co = state.currentOver;
+            let score = {... state.score};
+            score[co][action.payload.index] = action.payload.value;
         }
         
     }
 });
 
-export const { setTeams, setBattingTeam, startOver, finishOver } = inningsSlice.actions;
+export const { setTeams, setBattingTeam, startOver, finishOver, setScore } = inningsSlice.actions;
 export default inningsSlice.reducer;
