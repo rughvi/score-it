@@ -1,16 +1,30 @@
 import { GameTeams } from "@/app/enums/GameTeams";
+import { TeamPlayer } from "@/app/models/teamPlayer";
 import { createSlice } from "@reduxjs/toolkit";
+
+interface InitialState {
+    teams: TeamPlayer[];
+    battingTeam: GameTeams;
+    bowlingTeam: GameTeams;
+    currentOver: number;
+    isOverInProgress: boolean,
+    finishedOvers: number;
+    score: {}
+}
+
+const initialState: InitialState = {
+    teams: [],
+    battingTeam: GameTeams.None,
+    bowlingTeam: GameTeams.None,
+    currentOver: 0,
+    isOverInProgress: false,
+    finishedOvers: 0,
+    score: {}
+};
 
 const inningsSlice = createSlice({
     name: "inning",
-    initialState: {
-        teams: [],
-        battingTeam: GameTeams.None,
-        bowlingTeam: GameTeams.None,
-        currentOver: 0,
-        isOverInProgress: false,
-        finishedOvers: 0
-    },
+    initialState: initialState,
     reducers: {
         setTeams: (state, action) => {
             state.teams = action.payload;
@@ -24,6 +38,9 @@ const inningsSlice = createSlice({
                 return;
             }
             state.currentOver = state.currentOver + 1;
+            let co = state.currentOver;
+            let score = {... state.score, co : []};
+            state.score = score;
             state.isOverInProgress = true;
         },
         finishOver: (state) => {
