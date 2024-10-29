@@ -2,7 +2,7 @@ import { GameTeams } from "@/app/enums/GameTeams";
 import { TeamPlayer } from "@/app/models/teamPlayer";
 import { createSlice } from "@reduxjs/toolkit";
 
-interface InitialState {
+export interface InitialState {
     teams: TeamPlayer[];
     battingTeam: GameTeams;
     bowlingTeam: GameTeams;

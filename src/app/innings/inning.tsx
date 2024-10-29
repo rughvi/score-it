@@ -9,6 +9,8 @@ import { startOver } from "@/redux/slices/inningsSlice";
 export default function Inning({teams}: {teams: InningTeams}) {
     const battingTeam = useSelector((state) => state.innings.battingTeam);
     const bowlingTeam = useSelector((state) => state.innings.bowlingTeam);
+    const currentOver = useSelector((state) => state.innings.currentOver);
+    const score = useSelector((state) => state.innings.score);
     const [showModal, setShowModal] = useState(false);
     const dispatch = useDispatch();
 
@@ -24,11 +26,11 @@ export default function Inning({teams}: {teams: InningTeams}) {
                     Innings {teams.id}
                 </div>
                 <div className="flex justify-around flex-row">
-                    <div className="flex ">Batting: <span>Team {battingTeam.toString()}</span></div>
-                    <div className="flex ">Bowling: <span>Team {bowlingTeam.toString()}</span></div>
+                    <div className="flex ">Batting: <span className="mx-2">Team {battingTeam.toString()}</span></div>
+                    <div className="flex ">Bowling: <span className="mx-2">Team {bowlingTeam.toString()}</span></div>
                 </div>
                 <div className="flex justify-around flex-row">
-                    <div className="flex ">Total</div>
+                    <div className="flex ">Total: <span className="mx-2">{score[currentOver]?.reduce((a:number, b:number) => {return a+b}, 0)}</span></div>
                     <div className="flex ">Overs</div>
                 </div>
             </main>
