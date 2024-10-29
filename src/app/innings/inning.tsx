@@ -25,14 +25,24 @@ export default function Inning({teams}: {teams: InningTeams}) {
                 <div className="flex text-lg font-medium justify-center">
                     Innings {teams.id}
                 </div>
-                <div className="flex justify-around flex-row">
-                    <div className="flex ">Batting: <span className="mx-2">Team {battingTeam.toString()}</span></div>
-                    <div className="flex ">Bowling: <span className="mx-2">Team {bowlingTeam.toString()}</span></div>
+                <div className="flex justify-around flex-row px-10">
+                    <div className="flex w-2/4 my-2">Batting: <span className="mx-2">Team {battingTeam.toString()}</span></div>
+                    <div className="flex w-2/4 my-2">Bowling: <span className="mx-2">Team {bowlingTeam.toString()}</span></div>
                 </div>
-                <div className="flex justify-around flex-row">
-                    <div className="flex ">Total: <span className="mx-2">{score[currentOver]?.reduce((a:number, b:number) => {return a+b}, 0)}</span></div>
-                    <div className="flex ">Overs</div>
+                <div className="flex justify-around flex-row px-10">
+                    <div className="flex w-2/4 my-2">Total: <span className="mx-6">{score[currentOver]?.reduce((a:number, b:number) => {return a+b}, 0)??0}</span></div>
+                    <div className="flex w-2/4 my-2">Overs: <span className="mx-6">{currentOver===-1?0:currentOver}</span></div>
                 </div>
+                {/* <div className="grid grid-cols-4 gap-1">
+                    <div>Batting:</div>
+                    <div>Batting:</div>
+                    <div>Batting:</div>
+                    <div>Batting:</div>
+                    <div>Batting:</div>
+                    <div>Batting:</div>
+                    <div>Batting:</div>
+                    <div>Batting:</div>
+                </div> */}
             </main>
             {showModal && createPortal(
                 <ModalContent onClose={() => setShowModal(false)}>

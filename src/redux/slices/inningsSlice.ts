@@ -16,7 +16,7 @@ const initialState: InitialState = {
     teams: [],
     battingTeam: GameTeams.None,
     bowlingTeam: GameTeams.None,
-    currentOver: 0,
+    currentOver: -1,
     isOverInProgress: false,
     finishedOvers: 0,
     score: {}
